@@ -86,15 +86,27 @@ class Sort{
         return sorted
     }
 
-    quickSort(arr){
-        
+    partition(arr, l, r, p){
+        let swapPoint = l
+        for(; l <= r; l++){
+            if(arr[l] > p){
+                continue
+            } else{
+                this.swap(arr, l, swapPoint)
+                swapPoint++
+            }
+        }
+        return --swapPoint
+    }
+
+    quickSort(arr, l = 0, r = arr.length - 1){
+        if(l < r){
+            const pivotIdx = this.partition(arr, l, r, arr[r])
+            this.quickSort(arr, l, pivotIdx - 1)
+            this.quickSort(arr, pivotIdx + 1, r)
+            return arr
+        }
     }
 
 }
 
-
-// test driver code
-let sort = new Sort()
-let arr = [6, 5, 4, 3]
-arr = sort.mergeSort(arr)
-console.log(arr)
