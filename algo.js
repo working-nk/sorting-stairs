@@ -45,8 +45,45 @@ class Sort{
         }
     }
 
-    mergeSort(arr){
+    merge(leftArr, rightArr){
+        let i = 0
+        let j = 0
+        let sortedArr = []
+        while(i < leftArr.length && j < rightArr.length){
+            if(leftArr[i] < rightArr[j]){
+                sortedArr.push(leftArr[i])
+                i++
+            } else{
+                sortedArr.push(rightArr[j])
+                j++
+            }
+        }
 
+        while(i < leftArr.length){
+            sortedArr.push(leftArr[i])
+            i++
+        }
+
+        while(j < rightArr.length){
+            sortedArr.push(rightArr[i])
+            j++
+        }
+
+        return sortedArr
+    }
+
+    mergeSort(arr){
+        if(arr.length === 1){
+            return arr
+        }
+
+        const mid = Math.floor(arr.length / 2)
+
+        const left = arr.slice(0, mid)
+        const right = arr.slice(mid)
+
+        let sorted = this.merge(this.mergeSort(left), this.mergeSort(right))
+        return sorted
     }
 
     quickSort(arr){
@@ -58,6 +95,6 @@ class Sort{
 
 // test driver code
 let sort = new Sort()
-arr = [6, 5, 4, 3]
-sort.insertionSort(arr)
+let arr = [6, 5, 4, 3]
+arr = sort.mergeSort(arr)
 console.log(arr)
