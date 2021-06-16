@@ -28,34 +28,51 @@ function shuffleArray(array) {
     }
 }
 
+function buildStairs(arr){
+    arr.forEach(
+        (value, index) => {
+            let player = document.createElement("div")
+            player.classList.add("child")
+            player.id = "stair" + index
+            value *= 5
+            player.style.height = `${value}px`
+            if(index > 0){
+                let leftVal = index * 15
+                player.style.left = `${leftVal}px`
+            }
+            playground.appendChild(player)
+        }
+    )
+}
 
 function startSequence(event) {
     const sort = new Sort(window)
-    sort.bubbleSort(arr)
     container.classList.remove("pause")
     container.classList.add("play")
+    
+    if(event.target.id === "bubble"){
+        sort.bubbleSort(arr)
+    } else if(event.target.id === "selection") {
+        sort.selectionSort(arr)
+    } else if(event.target.id === "insertion") {
+        sort.insertionSort(arr)
+    } else if(event.target.id === "merge") {
+        arr = sort.mergeSort(arr)
+        buildStairs(arr) // will not work
+    } else if(event.target.id === "quick") {
+        sort.quickSort(arr)
+    }
 }
 
 // driver code
 let arr = createArray()
 shuffleArray(arr)
-
-arr.forEach(
-    (value, index) => {
-        let player = document.createElement("div")
-        player.classList.add("child")
-        player.id = "stair" + index
-        value *= 5
-        player.style.height = `${value}px`
-        if(index > 0){
-            let leftVal = index * 15
-            player.style.left = `${leftVal}px`
-        }
-        playground.appendChild(player)
-    }
-)
-
+buildStairs(arr)
 
 
 // event listeners
 bubble.addEventListener('click', startSequence)
+selection.addEventListener('click', startSequence)
+insertion.addEventListener('click', startSequence)
+merge.addEventListener('click', startSequence)
+quick.addEventListener('click', startSequence)

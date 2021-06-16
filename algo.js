@@ -35,11 +35,12 @@ export class Sort{
             for(let j = 0; j < size - i - 1; j++){
                 let iDiv = this.playground.querySelector(`#stair${j}`)
                 let jDiv = this.playground.querySelector(`#stair${j + 1}`)
-
                 this.changeColor(iDiv, jDiv, "red")
+            
                 if(arr[j] > arr[j + 1]){
                     this.swap(arr, j, j + 1)
                 }
+            
                 this.changeColor(iDiv, jDiv, "gold")
             }
         }
