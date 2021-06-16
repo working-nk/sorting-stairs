@@ -1,20 +1,48 @@
-class Sort{
+export class Sort{
+    
+    playground = NaN
+    win = NaN
+
+    constructor(window){
+        this.win = window
+        this.playground = this.win.document.querySelector(".playground")
+    }
+
+    changeColor(div1, div2, color){
+        div1.style.backgroundColor = color
+        div2.style.backgroundColor = color
+    }
+
+    changeHeight(i, j, arr){
+        let iDiv = this.playground.querySelector(`#stair${i}`)
+        let jDiv = this.playground.querySelector(`#stair${j}`)
+
+        iDiv.style.height = `${arr[i] * 5}px`
+        jDiv.style.height = `${arr[j] * 5}px`
+    }
+
     swap(arr, i, j){
         const temp = arr[i]
         arr[i] = arr[j]
         arr[j] = temp
+
+        this.changeHeight(i, j, arr)
     }
 
     bubbleSort(arr) {
         const size = arr.length
         for(let i = 0; i < size - 1; i++){
             for(let j = 0; j < size - i - 1; j++){
+                let iDiv = this.playground.querySelector(`#stair${j}`)
+                let jDiv = this.playground.querySelector(`#stair${j + 1}`)
+
+                this.changeColor(iDiv, jDiv, "red")
                 if(arr[j] > arr[j + 1]){
                     this.swap(arr, j, j + 1)
                 }
+                this.changeColor(iDiv, jDiv, "gold")
             }
         }
-        
     }
 
     selectionSort(arr){

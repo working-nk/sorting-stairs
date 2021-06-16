@@ -1,3 +1,5 @@
+import { Sort } from './algo.js'
+
 let container = document.querySelector(".container")
 let bubble = document.querySelector("#bubble")
 let selection = document.querySelector("#selection")
@@ -9,7 +11,7 @@ let replay = document.querySelector("#replay")
 
 
 // functions to do stuff
-function createArray(){
+function createArray() {
     let arr = []
 
     for(var i = 1; i < 92; i++){
@@ -27,17 +29,22 @@ function shuffleArray(array) {
 }
 
 
-// event listeners
-
+function startSequence(event) {
+    const sort = new Sort(window)
+    sort.bubbleSort(arr)
+    container.classList.remove("pause")
+    container.classList.add("play")
+}
 
 // driver code
-arr = createArray()
+let arr = createArray()
 shuffleArray(arr)
 
 arr.forEach(
     (value, index) => {
         let player = document.createElement("div")
         player.classList.add("child")
+        player.id = "stair" + index
         value *= 5
         player.style.height = `${value}px`
         if(index > 0){
@@ -49,3 +56,6 @@ arr.forEach(
 )
 
 
+
+// event listeners
+bubble.addEventListener('click', startSequence)

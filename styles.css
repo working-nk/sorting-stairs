@@ -19,7 +19,7 @@ body {
   border-radius: 7px;
   height: 150px;
   top: 3px;
-  z-index: 10px;
+  z-index: 10;
   opacity: 0;
 }
 
@@ -51,7 +51,7 @@ body {
   }
 }
 
-h3 {
+.nav h3 {
   margin-top: 5px;
   margin-bottom: 0;
   font-size: 50px;
@@ -59,13 +59,13 @@ h3 {
   color: rgba(225, 51, 81, 1);
 }
 
-.btn-container {
+.nav .btn-container {
   display: flex;
   align-items: center;
   justify-content: center;
 }
 
-.sort-btn {
+.nav .btn-container .sort-btn {
   margin-top: 25px;
   margin-right: 35px;
   border-radius: 15px;
