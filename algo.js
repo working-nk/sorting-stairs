@@ -2,6 +2,7 @@ export class Sort{
     
     playground = NaN
     win = NaN
+    waitTime = 50
 
     constructor(window){
         this.win = window
@@ -51,15 +52,15 @@ export class Sort{
                 let jDiv = this.playground.querySelector(`#stair${j + 1}`)
 
                 this.changeColor(iDiv, jDiv, "red")
-                await this.wait(15)
+                await this.wait(this.waitTime)
                 
                 if(arr[j] > arr[j + 1]){
                     this.changeColor(iDiv, jDiv, "blue")
                     this.swap(arr, j, j + 1)
-                    await this.wait(20)
+                    await this.wait(this.waitTime)
                 }
                 this.changeColor(iDiv, jDiv, "gold")
-                await this.wait(10)
+                await this.wait(this.waitTime)
             }
             this.changeColor(this.playground.querySelector(`#stair${sorted}`), undefined, "green")
             sorted--
@@ -79,31 +80,50 @@ export class Sort{
             let iDiv = this.playground.querySelector(`#stair${sorted}`)
             let jDiv = this.playground.querySelector(`#stair${minValIdx}`)
             this.changeColor(iDiv, jDiv, "blue")
-            await this.wait(15)
+            await this.wait(this.waitTime)
             
             this.swap(arr, sorted, minValIdx)
-            await this.wait(20)
+            await this.wait(this.waitTime)
             
             this.changeColor(jDiv, undefined, "gold")
             this.changeColor(iDiv, undefined, "green")
-            await this.wait(10)
+            await this.wait(this.waitTime)
             
             sorted++
         }
         this.changeColor(this.playground.querySelector(`#stair${sorted}`), undefined, "green")  
     }
 
-    insertionSort(arr){
+    async insertionSort(arr){
+        let sorted = arr.length - 1
         for(let i = 1; i < arr.length; i++){
             let j = i
             while(j > 0){
+                let iDiv = this.playground.querySelector(`#stair${j}`)
+                let jDiv = this.playground.querySelector(`#stair${j - 1}`)
+
+                this.changeColor(iDiv, jDiv, "red")
+                await this.wait(this.waitTime)
+
                 if(arr[j] < arr[j - 1]){
+                    this.changeColor(iDiv, jDiv, "blue")
                     this.swap(arr, j, j-1)
+
+                    await this.wait(this.waitTime)
                     j--
                 } else{
+                    this.changeColor(iDiv, jDiv, "gold")
+                    await this.wait(this.waitTime)
                     break
                 }
+                this.changeColor(iDiv, jDiv, "gold")
+                await this.wait(this.waitTime)
             }
+        }
+        while(sorted > -1){
+            this.changeColor(this.playground.querySelector(`#stair${sorted}`), undefined, "green")
+            await this.wait(50)
+            sorted--
         }
     }
 
