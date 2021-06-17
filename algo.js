@@ -2,7 +2,7 @@ export class Sort{
     
     playground = NaN
     win = NaN
-    waitTime = 25
+    waitTime = 50
 
     constructor(window){
         this.win = window
@@ -65,7 +65,8 @@ export class Sort{
             this.changeColor(this.playground.querySelector(`#stair${sorted}`), undefined, "cyan")
             sorted--
         }     
-        this.changeColor(this.playground.querySelector(`#stair${sorted}`), undefined, "cyan")  
+        this.changeColor(this.playground.querySelector(`#stair${sorted}`), undefined, "cyan") 
+        return true
     }
     
     async selectionSort(arr){
@@ -91,7 +92,9 @@ export class Sort{
             
             sorted++
         }
-        this.changeColor(this.playground.querySelector(`#stair${sorted}`), undefined, "cyan")  
+        this.changeColor(this.playground.querySelector(`#stair${sorted}`), undefined, "cyan")
+
+        return true
     }
 
     async insertionSort(arr){
@@ -125,6 +128,7 @@ export class Sort{
             await this.wait(50)
             sorted--
         }
+        return true
     }
 
     merge(leftArr, rightArr){
@@ -208,13 +212,13 @@ export class Sort{
     async quickSort(arr, l = 0, r = arr.length - 1){
         if(l <= r){
             const pivotIdx = await this.partition(arr, l, r)
-            console.log(pivotIdx)
             this.quickSort(arr, l, pivotIdx - 1)
             await this.wait(100)
             this.quickSort(arr, pivotIdx + 1, r)
             await this.wait(100)
         }
     }
+    
 
 }
 

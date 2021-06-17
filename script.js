@@ -7,7 +7,8 @@ let insertion = document.querySelector("#insertion")
 let merge = document.querySelector("#merge")
 let quick = document.querySelector("#quick")
 let playground = document.querySelector(".playground")
-let replay = document.querySelector("#replay")
+let replay = document.querySelector(".replay")
+let replay_btn = document.querySelector("#replay-btn")
 
 
 // functions to do stuff
@@ -45,30 +46,49 @@ function buildStairs(arr){
     )
 }
 
-function startSequence(event) {
+async function startSequence(event) {
     const sort = new Sort(window)
     container.classList.remove("pause")
     container.classList.add("play")
-    
+    let isComplete = false
     if(event.target.id === "bubble"){
-        sort.bubbleSort(arr)
+        isComplete = await sort.bubbleSort(arr)
     } else if(event.target.id === "selection") {
-        sort.selectionSort(arr)
+        isComplete = await sort.selectionSort(arr)
     } else if(event.target.id === "insertion") {
-        sort.insertionSort(arr)
+        isComplete = await sort.insertionSort(arr)
     } else if(event.target.id === "merge") {
         arr = sort.mergeSort(arr)
         buildStairs(arr) // will not work
     } else if(event.target.id === "quick") {
-        sort.quickSort(arr)
+        isComplete = await sort.quickSort(arr) // not working perfectly
+    }
+    if(isComplete){
+        setTimeout(endSequence, 5000)
     }
 }
 
-// driver code
-let arr = createArray()
-shuffleArray(arr)
-buildStairs(arr)
+function endSequence(){
+    replay.classList.add("on")
+}
 
+function resolveReplay(){
+    container.classList.remove("play")
+    container.classList.add("pause")
+    replay.classList.remove("on")
+    playground.innerHTML = null
+    drive()
+}
+
+function drive(){
+    arr = createArray()
+    shuffleArray(arr)
+    buildStairs(arr)
+}
+
+// driver code
+let arr = []
+drive()
 
 // event listeners
 bubble.addEventListener('click', startSequence)
@@ -76,3 +96,4 @@ selection.addEventListener('click', startSequence)
 insertion.addEventListener('click', startSequence)
 merge.addEventListener('click', startSequence)
 quick.addEventListener('click', startSequence)
+replay_btn.addEventListener('click', resolveReplay)
