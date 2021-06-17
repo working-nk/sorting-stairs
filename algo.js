@@ -2,7 +2,7 @@ export class Sort{
     
     playground = NaN
     win = NaN
-    waitTime = 50
+    waitTime = 25
 
     constructor(window){
         this.win = window
