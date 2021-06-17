@@ -62,10 +62,10 @@ export class Sort{
                 this.changeColor(iDiv, jDiv, "gold")
                 await this.wait(this.waitTime)
             }
-            this.changeColor(this.playground.querySelector(`#stair${sorted}`), undefined, "green")
+            this.changeColor(this.playground.querySelector(`#stair${sorted}`), undefined, "cyan")
             sorted--
         }     
-        this.changeColor(this.playground.querySelector(`#stair${sorted}`), undefined, "green")  
+        this.changeColor(this.playground.querySelector(`#stair${sorted}`), undefined, "cyan")  
     }
     
     async selectionSort(arr){
@@ -86,12 +86,12 @@ export class Sort{
             await this.wait(this.waitTime)
             
             this.changeColor(jDiv, undefined, "gold")
-            this.changeColor(iDiv, undefined, "green")
+            this.changeColor(iDiv, undefined, "cyan")
             await this.wait(this.waitTime)
             
             sorted++
         }
-        this.changeColor(this.playground.querySelector(`#stair${sorted}`), undefined, "green")  
+        this.changeColor(this.playground.querySelector(`#stair${sorted}`), undefined, "cyan")  
     }
 
     async insertionSort(arr){
@@ -121,7 +121,7 @@ export class Sort{
             }
         }
         while(sorted > -1){
-            this.changeColor(this.playground.querySelector(`#stair${sorted}`), undefined, "green")
+            this.changeColor(this.playground.querySelector(`#stair${sorted}`), undefined, "cyan")
             await this.wait(50)
             sorted--
         }
@@ -168,7 +168,15 @@ export class Sort{
         return sorted
     }
 
-    partition(arr, l, r, p){
+    async partition(arr, l, r){
+        let temp = l
+        while(temp <= r){
+            this.changeColor(this.playground.querySelector(`#stair${temp}`), undefined, "grey")
+            temp++
+        }
+        temp = l
+        await this.wait(1000)
+        let p = arr[r]
         let swapPoint = l
         for(; l <= r; l++){
             if(arr[l] > p){
@@ -176,17 +184,35 @@ export class Sort{
             } else{
                 this.swap(arr, l, swapPoint)
                 swapPoint++
+                await this.wait(10)
             }
         }
+
+        if(swapPoint !== null){
+            this.changeColor(this.playground.querySelector(`#stair${swapPoint - 1}`), undefined, "cyan")
+            await this.wait(1000)
+        }
+
+        while(temp <= r){
+            if(temp === swapPoint - 1){
+                temp++ 
+                continue
+            }
+            this.changeColor(this.playground.querySelector(`#stair${temp}`), undefined, "gold")
+            temp++
+        }
+        await this.wait(1000)
         return --swapPoint
     }
 
-    quickSort(arr, l = 0, r = arr.length - 1){
-        if(l < r){
-            const pivotIdx = this.partition(arr, l, r, arr[r])
+    async quickSort(arr, l = 0, r = arr.length - 1){
+        if(l <= r){
+            const pivotIdx = await this.partition(arr, l, r)
+            console.log(pivotIdx)
             this.quickSort(arr, l, pivotIdx - 1)
+            await this.wait(100)
             this.quickSort(arr, pivotIdx + 1, r)
-            return arr
+            await this.wait(100)
         }
     }
 
