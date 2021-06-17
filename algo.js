@@ -16,14 +16,15 @@ export class Sort{
         })
       }
 
-    changeColor(div1, div2, color){
-        div1.style.backgroundColor = color
-        div2.style.backgroundColor = color
-    }
 
-    changeColor(div, color){
-        div.style.backgroundColor = color
-    }
+    changeColor(div1, div2, color){
+        if(typeof div1 !== "undefined"){
+            div1.style.backgroundColor = color
+        }
+        if(typeof div2 !== "undefined"){
+            div2.style.backgroundColor = color
+        }
+    } 
 
     changeHeight(i, j, arr){
         let iDiv = this.playground.querySelector(`#stair${i}`)
@@ -43,25 +44,29 @@ export class Sort{
 
     async bubbleSort(arr) {
         const size = arr.length
+        let sorted = size - 1
         for(let i = 0; i < size - 1; i++){
             for(let j = 0; j < size - i - 1; j++){
                 let iDiv = this.playground.querySelector(`#stair${j}`)
                 let jDiv = this.playground.querySelector(`#stair${j + 1}`)
 
                 this.changeColor(iDiv, jDiv, "red")
-                // await this.wait(150)
+                await this.wait(15)
                 
                 if(arr[j] > arr[j + 1]){
                     this.changeColor(iDiv, jDiv, "blue")
                     this.swap(arr, j, j + 1)
-                    // await this.wait(300)
+                    await this.wait(20)
                 }
                 this.changeColor(iDiv, jDiv, "gold")
-                // await this.wait(75)
+                await this.wait(10)
             }
-        }           
+            this.changeColor(this.playground.querySelector(`#stair${sorted}`), undefined, "green")
+            sorted--
+        }     
+        this.changeColor(this.playground.querySelector(`#stair${sorted}`), undefined, "green")  
     }
-
+    
     async selectionSort(arr){
         let sorted = 0
         for(let i = 0; i < arr.length - 1; i++){
@@ -71,19 +76,21 @@ export class Sort{
                     minValIdx = j
                 }
             }
-            // console.log(this.playground)
             let iDiv = this.playground.querySelector(`#stair${sorted}`)
             let jDiv = this.playground.querySelector(`#stair${minValIdx}`)
-            this.changeColor(iDiv, jDiv, "red")
-            await this.wait(1000)
-
+            this.changeColor(iDiv, jDiv, "blue")
+            await this.wait(15)
+            
             this.swap(arr, sorted, minValIdx)
-
-            this.changeColor(minValIdx, "yellow")
-            await this.wait(1000)
+            await this.wait(20)
+            
+            this.changeColor(jDiv, undefined, "gold")
+            this.changeColor(iDiv, undefined, "green")
+            await this.wait(10)
             
             sorted++
         }
+        this.changeColor(this.playground.querySelector(`#stair${sorted}`), undefined, "green")  
     }
 
     insertionSort(arr){
