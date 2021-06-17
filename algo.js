@@ -8,9 +8,21 @@ export class Sort{
         this.playground = this.win.document.querySelector(".playground")
     }
 
+    wait(x) {
+        return new Promise(resolve => {
+          setTimeout(() => {
+            resolve("continue")
+          }, x)
+        })
+      }
+
     changeColor(div1, div2, color){
         div1.style.backgroundColor = color
         div2.style.backgroundColor = color
+    }
+
+    changeColor(div, color){
+        div.style.backgroundColor = color
     }
 
     changeHeight(i, j, arr){
@@ -29,23 +41,28 @@ export class Sort{
         this.changeHeight(i, j, arr)
     }
 
-    bubbleSort(arr) {
+    async bubbleSort(arr) {
         const size = arr.length
         for(let i = 0; i < size - 1; i++){
             for(let j = 0; j < size - i - 1; j++){
                 let iDiv = this.playground.querySelector(`#stair${j}`)
                 let jDiv = this.playground.querySelector(`#stair${j + 1}`)
+
                 this.changeColor(iDiv, jDiv, "red")
+                // await this.wait(150)
                 
                 if(arr[j] > arr[j + 1]){
+                    this.changeColor(iDiv, jDiv, "blue")
                     this.swap(arr, j, j + 1)
+                    // await this.wait(300)
                 }
                 this.changeColor(iDiv, jDiv, "gold")
+                // await this.wait(75)
             }
         }           
     }
 
-    selectionSort(arr){
+    async selectionSort(arr){
         let sorted = 0
         for(let i = 0; i < arr.length - 1; i++){
             let minValIdx = i
@@ -54,7 +71,17 @@ export class Sort{
                     minValIdx = j
                 }
             }
+            // console.log(this.playground)
+            let iDiv = this.playground.querySelector(`#stair${sorted}`)
+            let jDiv = this.playground.querySelector(`#stair${minValIdx}`)
+            this.changeColor(iDiv, jDiv, "red")
+            await this.wait(1000)
+
             this.swap(arr, sorted, minValIdx)
+
+            this.changeColor(minValIdx, "yellow")
+            await this.wait(1000)
+            
             sorted++
         }
     }
