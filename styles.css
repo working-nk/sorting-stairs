@@ -94,7 +94,7 @@ body {
   top: 0;
 }
 
-.replay #replay {
+.replay #replay-btn {
   position: absolute;
   margin: 0;
   top: 200px;
@@ -107,7 +107,7 @@ body {
   border: 0;
 }
 
-.replay #replay:hover {
+.replay #replay-btn:hover {
   border: 1px solid black;
   border-radius: 20%;
 }
